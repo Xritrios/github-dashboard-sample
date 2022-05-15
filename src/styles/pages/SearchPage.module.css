@@ -1,10 +1,7 @@
 .form {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-}
-
-.textfield {
-    margin-right: 50px;
+    align-items: flex-start;
 }

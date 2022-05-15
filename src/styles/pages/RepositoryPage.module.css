@@ -1,3 +1,15 @@
+.container {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardContainer {
+    margin-bottom: 25px;
+}
+
 .cardActionsContainer {
     display: flex;
     flex-direction: row;

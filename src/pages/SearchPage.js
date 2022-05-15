@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import { Header } from '../components';
 import { getUserRequest } from '../store/reducers/getUser';
 import * as styles from '../styles/pages/SearchPage.module.css';
@@ -9,7 +9,7 @@ import * as styles from '../styles/pages/SearchPage.module.css';
 const SearchPage = () => {
 	const nav = useNavigate();
 	const dispatch = useDispatch();
-	const [name, setUsername] = React.useState('');
+	const [name, setName] = React.useState('');
 
 	const { username, avatar_url, loading, loaded, error } = useSelector(
 		(state) => state.getUser
@@ -26,11 +26,12 @@ const SearchPage = () => {
 			username !== undefined &&
 			username.length > 0 &&
 			avatar_url !== undefined &&
-			avatar_url.length > 0
+			avatar_url.length > 0 &&
+			loaded
 		) {
 			nav('/user/' + username);
 		}
-	}, [username, avatar_url]);
+	}, [username, avatar_url, loaded]);
 
 	return (
 		<div>
@@ -41,13 +42,17 @@ const SearchPage = () => {
 				autoComplete='off'
 				onSubmit={handleSubmit}
 			>
+				{loading ? <CircularProgress /> : <></>}
 				<TextField
-					className={styles.default.textfield}
+					size='small'
+					style={{ marginRight: 50 }}
 					id='standard-basic'
-					label='Standard'
-					onChange={(e) => setUsername(e.target.value)}
+					label='GitHub User'
+					onChange={(e) => setName(e.target.value)}
+					helperText={error}
+					error={error !== undefined && error.length > 0}
 				/>
-				<Button variant='contained' type='submit'>
+				<Button variant='contained' size='medium' type='submit'>
 					SUBMIT
 				</Button>
 			</form>

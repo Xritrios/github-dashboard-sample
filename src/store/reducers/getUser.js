@@ -13,6 +13,13 @@ const getUserSlice = createSlice({
 	name: 'getUser',
 	initialState,
 	reducers: {
+		backToInitialState(state) {
+			state.username = '';
+			state.avatar_url = '';
+			state.error = '';
+			state.loading = false;
+			state.loaded = false;
+		},
 		getUserRequestInit(state) {
 			state.error = '';
 			state.loading = true;
@@ -25,15 +32,23 @@ const getUserSlice = createSlice({
 			state.loading = false;
 		},
 		getUserFailure(state, { payload }) {
-			state.error = payload.error;
+			state.error = payload;
 			state.loaded = false;
 			state.loading = false;
 		},
 	},
 });
 
-const { getUserRequestInit, getUserSuccess, getUserFailure } =
-	getUserSlice.actions;
+const {
+	backToInitialState,
+	getUserRequestInit,
+	getUserSuccess,
+	getUserFailure,
+} = getUserSlice.actions;
+
+export const initUserRequest = () => async (dispatch) => {
+	dispatch(backToInitialState());
+};
 
 export const getUserRequest = (username) => async (dispatch) => {
 	dispatch(getUserRequestInit());
@@ -43,7 +58,7 @@ export const getUserRequest = (username) => async (dispatch) => {
 		);
 		dispatch(getUserSuccess(data));
 	} catch (error) {
-		dispatch(getUserFailure(error.response.message));
+		dispatch(getUserFailure(error.response.data.message));
 	}
 };
 

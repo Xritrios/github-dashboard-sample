@@ -7,6 +7,7 @@ import {
 	CardActions,
 	CardContent,
 	CardHeader,
+	CircularProgress,
 	Chip,
 	Collapse,
 	Link,
@@ -19,6 +20,7 @@ import { Header } from '../components';
 import * as styles from '../styles/pages/RepositoryPage.module.css';
 
 const RepositoryPage = () => {
+	const nav = useNavigate();
 	const dispatch = useDispatch();
 	const [name] = React.useState(window.location.pathname.split('/')[2]);
 	const [repo] = React.useState(window.location.pathname.split('/')[4]);
@@ -48,44 +50,59 @@ const RepositoryPage = () => {
 		dispatch(getRepoRequest(name, repo));
 	}, []);
 
+	const goBack = () => {
+		nav('/user/' + name);
+	};
+
 	return (
 		<div>
 			<Header />
-			<Card sx={{ width: 500 }}>
-				<CardHeader
-					avatar={
-						<Avatar
-							alt={username + ' avatar'}
-							src={avatar_url}
-							sx={{ width: 24, height: 24 }}
+			{loading ? (
+				<div className={styles.default.container}>
+					<CircularProgress />
+				</div>
+			) : (
+				<div className={styles.default.container}>
+					<Card className={styles.default.cardContainer} sx={{ width: 500 }}>
+						<CardHeader
+							avatar={
+								<Avatar
+									alt={username + ' avatar'}
+									src={avatar_url}
+									sx={{ width: 24, height: 24 }}
+								/>
+							}
+							title={<Link href={url}>{reponame}</Link>}
+							subheader={
+								'Created at : ' + created_at + ', Updated at : ' + updated_at
+							}
 						/>
-					}
-					title={<Link href={url}>{reponame}</Link>}
-					subheader={
-						'Created at : ' + created_at + ', Updated at : ' + updated_at
-					}
-				/>
-				<CardActions
-					className={styles.default.cardActionsContainer}
-					disableSpacing
-				>
-					<div className={styles.default.infoContainer}>
-						<Chip style={{ marginRight: 10 }} label={language} />
-						<Rating name='read-only' value={stars} readOnly />
-					</div>
-					{expanded ? (
-						<ExpandLess onClick={handleExpandClick} />
-					) : (
-						<ExpandMore onClick={handleExpandClick} />
-					)}
-				</CardActions>
-				<Collapse in={expanded} timeout='auto' unmountOnExit>
-					<CardContent>
-						<Typography variant='h5'>Description:</Typography>
-						<Typography variant='body1'>{description}</Typography>
-					</CardContent>
-				</Collapse>
-			</Card>
+						<CardActions
+							className={styles.default.cardActionsContainer}
+							disableSpacing
+						>
+							<div className={styles.default.infoContainer}>
+								<Chip style={{ marginRight: 10 }} label={language} />
+								<Rating name='read-only' value={stars} readOnly />
+							</div>
+							{expanded ? (
+								<ExpandLess onClick={handleExpandClick} />
+							) : (
+								<ExpandMore onClick={handleExpandClick} />
+							)}
+						</CardActions>
+						<Collapse in={expanded} timeout='auto' unmountOnExit>
+							<CardContent>
+								<Typography variant='h5'>Description:</Typography>
+								<Typography variant='body1'>{description}</Typography>
+							</CardContent>
+						</Collapse>
+					</Card>
+					<Typography style={{ cursor: 'pointer' }} onClick={goBack}>
+						Go back
+					</Typography>
+				</div>
+			)}
 		</div>
 	);
 };
