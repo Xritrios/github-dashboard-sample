@@ -44,7 +44,7 @@ const UserPage = () => {
 							src={avatar_url}
 							sx={{ width: 24, height: 24 }}
 						/>
-						<div style={{ marginLeft: 5 }}>{username}</div>
+						<Typography style={{ marginLeft: 5 }}>{username}</Typography>
 					</Paper>
 					<Paper className={styles.default.reposContainer} elevation={2}>
 						{repos.map((repo) => {
@@ -54,7 +54,7 @@ const UserPage = () => {
 									elevation={1}
 									onClick={() => handleClick(repo)}
 								>
-									{repo}
+									<Typography>{repo}</Typography>
 								</Paper>
 							);
 						})}
