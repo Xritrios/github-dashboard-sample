@@ -86,9 +86,15 @@ const RepositoryPage = () => {
 								<Rating name='read-only' value={stars} readOnly />
 							</div>
 							{expanded ? (
-								<ExpandLess onClick={handleExpandClick} />
+								<ExpandLess
+									style={{ cursor: 'pointer' }}
+									onClick={handleExpandClick}
+								/>
 							) : (
-								<ExpandMore onClick={handleExpandClick} />
+								<ExpandMore
+									style={{ cursor: 'pointer' }}
+									onClick={handleExpandClick}
+								/>
 							)}
 						</CardActions>
 						<Collapse in={expanded} timeout='auto' unmountOnExit>
