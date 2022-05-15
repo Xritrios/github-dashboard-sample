@@ -7,7 +7,10 @@ function App() {
 		<Routes>
 			<Route path='/' element={<SearchPage />} />
 			<Route path='/user/:username' element={<UserPage />} />
-			<Route path='/:username/:repository' element={<RepositoryPage />} />
+			<Route
+				path='/user/:username/repo/:repository'
+				element={<RepositoryPage />}
+			/>
 		</Routes>
 	);
 }
