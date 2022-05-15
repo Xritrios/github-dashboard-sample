@@ -20,7 +20,7 @@ const UserPage = () => {
 	}, []);
 
 	const handleClick = (repo) => {
-		nav('/repo/' + repo);
+		nav('repo/' + repo);
 	};
 
 	return (

@@ -2,7 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
-	name: '',
+	username: '',
+	avatar_url: '',
+	reponame: '',
 	language: '',
 	stars: 0,
 	description: '',
@@ -24,12 +26,14 @@ const getRepoSlice = createSlice({
 			state.loaded = false;
 		},
 		getRepoSuccess(state, { payload }) {
-			state.name = payload.name;
+			state.username = payload.owner.login;
+			state.avatar_url = payload.owner.avatar_url;
+			state.reponame = payload.name;
 			state.language = payload.language;
 			state.stars = payload.stargazers_count;
 			state.description = payload.description;
-			state.created_at = payload.created_at;
-			state.updated_at = payload.updated_at;
+			state.created_at = payload.created_at.split('T')[0];
+			state.updated_at = payload.updated_at.split('T')[0];
 			state.url = payload.html_url;
 			state.loaded = true;
 			state.loading = false;
@@ -49,7 +53,7 @@ export const getRepoRequest = (username, reponame) => async (dispatch) => {
 	dispatch(getRepoRequestInit());
 	try {
 		const { data } = await axios.get(
-			'https://api.github.com/users/' + username + '/repos' + reponame
+			'https://api.github.com/repos/' + username + '/' + reponame
 		);
 		dispatch(getRepoSuccess(data));
 	} catch (error) {
