@@ -38,6 +38,7 @@ const UserPage = () => {
 				</div>
 			) : (
 				<div className={styles.default.container}>
+					<Typography variant='h6'>Repositories of</Typography>
 					<Paper className={styles.default.userContainer} elevation={3}>
 						<Avatar
 							alt={username + ' avatar'}
