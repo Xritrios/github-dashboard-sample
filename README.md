@@ -20,4 +20,4 @@ This project was made using **React.js** as the frontend library, **MaterialUI**
 
 ## Deployment
 
-This project is deployed to Heroku. The url is https://github-dashboard-sample.herokuapp.com/
+<del>This project is deployed to Heroku. The url is https://github-dashboard-sample.herokuapp.com/</del>
