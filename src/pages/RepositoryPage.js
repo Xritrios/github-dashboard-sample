@@ -25,11 +25,10 @@ const RepositoryPage = () => {
 	const [name] = React.useState(window.location.pathname.split('/')[2]);
 	const [repo] = React.useState(window.location.pathname.split('/')[4]);
 
-	const [expanded, setExpanded] = React.useState(false);
-
-	const handleExpandClick = () => {
-		setExpanded(!expanded);
-	};
+	const [expanded, toggleExpand] = React.useReducer(
+		(expanded) => !expanded,
+		false
+	);
 
 	const {
 		username,
@@ -88,12 +87,12 @@ const RepositoryPage = () => {
 							{expanded ? (
 								<ExpandLess
 									style={{ cursor: 'pointer' }}
-									onClick={handleExpandClick}
+									onClick={toggleExpand}
 								/>
 							) : (
 								<ExpandMore
 									style={{ cursor: 'pointer' }}
-									onClick={handleExpandClick}
+									onClick={toggleExpand}
 								/>
 							)}
 						</CardActions>
