@@ -9,7 +9,7 @@ import * as styles from '../styles/pages/SearchPage.module.css';
 const SearchPage = () => {
 	const nav = useNavigate();
 	const dispatch = useDispatch();
-	const [name, setName] = React.useState('');
+	const name = React.useRef();
 
 	const { username, avatar_url, loading, loaded, error } = useSelector(
 		(state) => state.getUser
@@ -17,8 +17,7 @@ const SearchPage = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-
-		dispatch(getUserRequest(name));
+		dispatch(getUserRequest(name.current.value));
 	};
 
 	React.useEffect(() => {
@@ -48,7 +47,7 @@ const SearchPage = () => {
 					style={{ marginRight: 50 }}
 					id='standard-basic'
 					label='GitHub User'
-					onChange={(e) => setName(e.target.value)}
+					inputRef={name}
 					helperText={error}
 					error={error !== undefined && error.length > 0}
 				/>
